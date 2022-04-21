@@ -168,7 +168,7 @@ if folFil == 's':
             for item in datas:
                 # If histo flag is set, safe data to numpy array
                 if histo:
-                    histoData[1,item[basis]] = histoData[1,item[basis]] + 1
+                    histoData[1,item] = histoData[1,item] + 1
                 if startValue > 0:
                     if item < startValue:
                         new_img_data.append(colors[0])
@@ -215,7 +215,7 @@ else:
             for item in datas:
                 # If histo flag is set, safe data to numpy array
                 if histo:
-                    histoData[1,item[basis]] = histoData[1,item[basis]] + 1
+                    histoData[1,item] = histoData[1,item] + 1
                 if startValue > 0:
                     if item < startValue:
                         new_img_data.append(colors[0])
