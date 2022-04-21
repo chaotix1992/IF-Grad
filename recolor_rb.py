@@ -230,6 +230,6 @@ else:
         
         img.save('./ConversionsFolder/converted_'+filename,'TIFF')
         if histo:
-            np.savetxt('./Conversions/data_'+filename+'.dat',histoData,delimiter='\t',fmt='%1i')
+            np.savetxt('./ConversionsFolder/data_'+filename+'.dat',histoData,delimiter='\t',fmt='%1i')
 elapsed = time.time()-t
 print('Finished. Time taken: ' + str(elapsed) + 's')
