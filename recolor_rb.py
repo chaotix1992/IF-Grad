@@ -8,13 +8,20 @@ Created on Tue Jul 27 09:20:23 2021
 from PIL import Image, ImageOps
 from matplotlib import cm
 from colour import Color
+#import numpy as np
 import os
 
-# Prepare lists and bool
+# Prepare lists and bools
+# w bool: To-Do; Should ask if values should be safed to files or not
+# x bool: Checks if asked for base color
+# y bool: Checks if asked for amount of files
+# z bool: Checks if asked for minimum intensity value
 files = []
 colors = []
+#w = False
 x = False
 y = False
+z = False
 """
 Start color and end color for smooth transition into colormap
 Amount of steps depend on how fast the transition has to be
@@ -33,27 +40,20 @@ The transition in the pre-code makes a somewhat janky start from black
 possible.
 """
 
+# Makes a transition from black to blue (rgb(0,0,0) to rgb(0,0,255)) and
+# adds the colors to a list
 
-black = Color("#000000")
-deepblue1 = Color("#000033")
-deepblue2 = Color("#000034")
-darkerblue1 = Color("#000084")
-darkerblue2 = Color("#000085")
-darkblue1 = Color("#0000AB")
-darkblue2 = Color("#0000AC")
-blue = Color("#0001FF")
-colorSteps = 16
-black2deep = list(black.range_to(deepblue1,colorSteps))
-deep2darker = list(deepblue2.range_to(darkerblue1,colorSteps))
-darker2dark = list(darkerblue2.range_to(darkblue1,colorSteps))
-dark2blue = list(darkblue2.range_to(blue,colorSteps))
-blue2black = black2deep + deep2darker + darker2dark + dark2blue
+blue2black = list()
 
+for numbers in range(256):
+    if numbers % 4 == 0:        
+        colorAdd = Color(rgb=(0, 0, numbers/255))
+        blue2black.append(colorAdd)
 
 # Takes 64 values from the previous transition and adds the rest of the color 
 # map (from right to left)
 for i in range(256):
-    if i >= 256-4*colorSteps:    # Part for smooth transition
+    if i >= 256-len(blue2black):    # Part for smooth transition
         rgbaTuple = list(blue2black[256-i-1].rgb)
         for k in range(3):
             rgbaTuple[k] = round(rgbaTuple[k]*255)        
@@ -99,6 +99,23 @@ while not y:
     else:
         print('Invalid input!')
 
+# Asking for starting intensity value
+while not z:
+    startValue = str(input("Minimum color intensity? (0-255) "))
+    if startValue == '':
+        startValue = 0
+    elif startValue.isnumeric():
+        startValue = int(startValue)
+        if startValue > 255:
+            print('Please input a number between 0 and 255')
+            continue
+    else:
+        print('Please input a number between 0 and 255')
+        continue
+    colorAssignSteps = 255 / (255 - startValue)
+    z = True
+    
+ 
 # Asign each pixel a new value from the prepared colors list, depending on 
 # the intensity of a specified color
 if folFil == 's':
@@ -111,7 +128,16 @@ if folFil == 's':
             
             new_img_data = []
             for item in datas:
-                new_img_data.append(colors[item[basis]])
+                # If defined starting intensity value is above 0, assign colors
+                # on stretched scale (hopefully)
+                if startValue > 0:
+                    if item[basis] < startValue:
+                        new_img_data.append(colors[0])
+                    else:
+                        newValue = item[basis] - startValue
+                        new_img_data.append(colors[int(round(newValue * colorAssignSteps))])
+                else:
+                    new_img_data.append(colors[item[basis]])
         else:
             img = Image.open(filename)        
             img = img.convert("RGB")
@@ -120,7 +146,14 @@ if folFil == 's':
             
             new_img_data = []
             for item in datas:
-                new_img_data.append(colors[item])
+                if startValue > 0:
+                    if item < startValue:
+                        new_img_data.append(colors[0])
+                    else:
+                        newValue = item - startValue
+                        new_img_data.append(colors[int(round(newValue * colorAssignSteps))])
+                else:
+                    new_img_data.append(colors[item])
         
         img.putdata(new_img_data)
         
@@ -135,7 +168,16 @@ else:
             
             new_img_data = []
             for item in datas:
-                new_img_data.append(colors[item[basis]])
+                # If defined starting intensity value is above 0, assign colors
+                # on stretched scale (hopefully)
+                if startValue > 0:
+                    if item[basis] < startValue:
+                        new_img_data.append(colors[0])
+                    else:
+                        newValue = item[basis] - startValue
+                        new_img_data.append(colors[int(round(newValue * colorAssignSteps))])
+                else:
+                    new_img_data.append(colors[item[basis]])
         else:
             img = Image.open(path + filename)        
             img = img.convert("RGB")
@@ -144,8 +186,15 @@ else:
             
             new_img_data = []
             for item in datas:
-                new_img_data.append(colors[item])
+                if startValue > 0:
+                    if item < startValue:
+                        new_img_data.append(colors[0])
+                    else:
+                        newValue = item - startValue
+                        new_img_data.append(colors[int(round(newValue * colorAssignSteps))])
+                else:
+                    new_img_data.append(colors[item])
         
         img.putdata(new_img_data)
         
-        img.save('./Conversions/converted_'+filename,'TIFF')
+        img.save('./ConversionsFolder/converted_'+filename,'TIFF')
