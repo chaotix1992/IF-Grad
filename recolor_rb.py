@@ -181,7 +181,8 @@ if folFil == 's':
         img.putdata(new_img_data)
         
         img.save('./Conversions/converted_'+filename,'TIFF')
-        np.savetxt('./Conversions/data_'+filename+'.dat',histoData,delimiter='\t',fmt='%1i')
+        if histo:
+            np.savetxt('./Conversions/data_'+filename+'.dat',histoData,delimiter='\t',fmt='%1i')
 else:
     for filename in files:
         if basis < 3:
@@ -228,5 +229,7 @@ else:
         img.putdata(new_img_data)
         
         img.save('./ConversionsFolder/converted_'+filename,'TIFF')
+        if histo:
+            np.savetxt('./Conversions/data_'+filename+'.dat',histoData,delimiter='\t',fmt='%1i')
 elapsed = time.time()-t
 print('Finished. Time taken: ' + str(elapsed) + 's')
