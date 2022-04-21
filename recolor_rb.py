@@ -8,7 +8,8 @@ Created on Tue Jul 27 09:20:23 2021
 from PIL import Image, ImageOps
 from matplotlib import cm
 from colour import Color
-#import numpy as np
+import numpy as np
+import time
 import os
 
 # Prepare lists and bools
@@ -18,10 +19,11 @@ import os
 # z bool: Checks if asked for minimum intensity value
 files = []
 colors = []
-#w = False
+w = False
 x = False
 y = False
 z = False
+histo = False
 """
 Start color and end color for smooth transition into colormap
 Amount of steps depend on how fast the transition has to be
@@ -99,6 +101,20 @@ while not y:
     else:
         print('Invalid input!')
 
+# Asking if data should be saved to files
+while not w:
+    answer = str(input('Do you want to save the color data to a file? (y/n) '))
+    if answer == 'y':
+        histo = True
+        w = True
+        histoData = np.array([np.arange(0,256,1),np.zeros(256)],np.int32)
+    elif answer == 'n':
+        histo = False
+        w = True
+    else:
+        print("Please input a valid response.")
+
+
 # Asking for starting intensity value
 while not z:
     startValue = str(input("Minimum color intensity? (0-255) "))
@@ -118,6 +134,7 @@ while not z:
  
 # Asign each pixel a new value from the prepared colors list, depending on 
 # the intensity of a specified color
+t = time.time()
 if folFil == 's':
     for filename in files:
         if basis < 3:
@@ -128,6 +145,9 @@ if folFil == 's':
             
             new_img_data = []
             for item in datas:
+                # If histo flag is set, safe data to numpy array
+                if histo:
+                    histoData[1,item[basis]] = histoData[1,item[basis]] + 1
                 # If defined starting intensity value is above 0, assign colors
                 # on stretched scale (hopefully)
                 if startValue > 0:
@@ -146,6 +166,9 @@ if folFil == 's':
             
             new_img_data = []
             for item in datas:
+                # If histo flag is set, safe data to numpy array
+                if histo:
+                    histoData[1,item[basis]] = histoData[1,item[basis]] + 1
                 if startValue > 0:
                     if item < startValue:
                         new_img_data.append(colors[0])
@@ -158,6 +181,7 @@ if folFil == 's':
         img.putdata(new_img_data)
         
         img.save('./Conversions/converted_'+filename,'TIFF')
+        np.savetxt('./Conversions/data_'+filename+'.dat',histoData,delimiter='\t',fmt='%1i')
 else:
     for filename in files:
         if basis < 3:
@@ -168,6 +192,9 @@ else:
             
             new_img_data = []
             for item in datas:
+                # If histo flag is set, safe data to numpy array
+                if histo:
+                    histoData[1,item[basis]] = histoData[1,item[basis]] + 1
                 # If defined starting intensity value is above 0, assign colors
                 # on stretched scale (hopefully)
                 if startValue > 0:
@@ -186,6 +213,9 @@ else:
             
             new_img_data = []
             for item in datas:
+                # If histo flag is set, safe data to numpy array
+                if histo:
+                    histoData[1,item[basis]] = histoData[1,item[basis]] + 1
                 if startValue > 0:
                     if item < startValue:
                         new_img_data.append(colors[0])
@@ -198,3 +228,5 @@ else:
         img.putdata(new_img_data)
         
         img.save('./ConversionsFolder/converted_'+filename,'TIFF')
+elapsed = time.time()-t
+print('Finished. Time taken: ' + str(elapsed) + 's')
