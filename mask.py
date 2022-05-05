@@ -121,7 +121,7 @@ if folFil == "s":
         newImageData = []
         
         for entry in data:
-            if entry[filterColor-1] < startValue:
+            if entry[filterColor-1] <= startValue:
                 newImageData.append(white)
             else: 
                 newImageData.append(maskColor)
@@ -138,7 +138,7 @@ else:
         newImageData = []
         
         for entry in data:
-            if entry[filterColor-1] < startValue:
+            if entry[filterColor-1] <= startValue:
                 newImageData.append(white)
             else: 
                 newImageData.append(maskColor)
