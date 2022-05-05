@@ -130,7 +130,7 @@ if folFil == "s":
         img.save('./Masks/masked_'+fileName,'TIFF')
 else:
     for fileName in files:
-        img = Image.open(fileName)
+        img = Image.open(path + fileName)
 
         img = img.convert("RGB")
         data = img.getdata()
