@@ -1,6 +1,8 @@
 # Fluorescent image gradient converter
 The purpose of this repository is to take an immunofluorescent picture and convert the intensity of the color to a pre-defined spectrum.
 
+<img src="https://github.com/chaotix1992/IF-Grad/blob/main/GDp.png" width="300" height="300"> <img src="https://github.com/chaotix1992/IF-Grad/blob/main/converted_GDp.png" width="300" height="300"> <img src="https://github.com/chaotix1992/IF-Grad/blob/main/masked_GDp.png" width="300" height="300">
+
 ## Prerequisites
 The Python script has been written in Python 3.8.6. The files `recolor_rb.py` and `mask.py` require the following Python modules for execution:
 - [Pillow](https://github.com/python-pillow/Pillow)
