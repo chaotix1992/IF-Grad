@@ -17,6 +17,9 @@ import os
 # x bool: Checks if asked for base color
 # y bool: Checks if asked for amount of files
 # z bool: Checks if asked for minimum intensity value
+
+print("Welcome to IF-Grad. A fluorescent image gradient converter.")
+
 files = []
 colors = []
 w = False
@@ -24,6 +27,7 @@ x = False
 y = False
 z = False
 histo = False
+
 """
 Start color and end color for smooth transition into colormap
 Amount of steps depend on how fast the transition has to be
@@ -92,11 +96,20 @@ while not y:
         addMore = 'y'
         while addMore == 'y':
             files.append(str(input('Enter filename: ')))
+            try:
+                img = Image.open(files[-1])
+            except: 
+                print("Filename either incorrect or file does not exist.")
+                continue
             addMore = input('Add more files? (y/n) ')
         y = True
     elif folFil == 'f':
         path = str(input('Enter folder path (syntax: C:\\files\\myFolder\\): '))
-        files = os.listdir(path)
+        try:
+            files = os.listdir(path)
+        except:
+            print("Path to folder either incorrect or folder doesn't exist.")
+            continue
         y = True
     else:
         print('Invalid input!')
