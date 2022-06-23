@@ -11,6 +11,7 @@ from colour import Color
 import numpy as np
 import time
 import os
+import sys
 
 # Prepare lists and bools
 # w bool: To-Do; Should ask if values should be safed to files or not
@@ -45,6 +46,14 @@ and move to the left (hence the reverse at the end)
 The transition in the pre-code makes a somewhat janky start from black 
 possible.
 """
+# Check if a file got drag and dropped
+# try:
+#     hold = str(sys.argv[1])
+#     hold.split("\\")
+#     files.append(hold[-1])
+#     y = True
+# except:
+#     y = False
 
 # Makes a transition from black to blue (rgb(0,0,0) to rgb(0,0,255)) and
 # adds the colors to a list
