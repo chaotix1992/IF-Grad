@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Happel"
+  given-names: "Julian"
+  orcid: "https://orcid.org/0000-0002-9852-4720"
+title: "IF-Grad: Fluorescent image gradient converter"
+version: 0.1.2
+date-released: 2022-06-23
+url: "https://github.com/chaotix1992/IF-Grad"
