@@ -29,13 +29,14 @@ while not w:
     if folFil == "s":
         addMore = "y"
         while addMore == "y":
-            files.append(str(input("Please input the desired filename of the file you want to create a mask of, including file extension: ")))
+            buffer = str(input("Please input the desired filename of the file you want to create a mask of, including file extension: "))
             # Check if file exists, if so, save it to the img variable, otherwise ask again
             try:
-                img = Image.open(files[-1])
+                img = Image.open(buffer)
             except:
                 print("Filename either incorrect or file does not exist.")
                 continue
+            files.append(buffe)
             addMore = str(input("Add more files? (y/n) "))
     elif folFil == "f":
         while not pathCorrect:
