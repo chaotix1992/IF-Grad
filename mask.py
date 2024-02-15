@@ -36,7 +36,7 @@ while not w:
             except:
                 print("Filename either incorrect or file does not exist.")
                 continue
-            files.append(buffe)
+            files.append(buffer)
             addMore = str(input("Add more files? (y/n) "))
     elif folFil == "f":
         while not pathCorrect:
