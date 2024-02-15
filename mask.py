@@ -88,29 +88,8 @@ while not y:
 
 # Let the user input the mask color
 
-while not z:
-    maskColor = str(input("Please input your desired mask color (red, green, blue, black): "))
-    if maskColor == "red" or maskColor == "r":
-        maskColor = (255, 0, 0)
-        print("Thank you. Starting to work now...")
-        t = time.time()
-    elif maskColor == "green" or maskColor == "g":
-        maskColor = (0, 255, 0)
-        print("Thank you. Starting to work now...")
-        t = time.time()
-    elif maskColor == "blue" or maskColor == "b":
-        maskColor = (0, 0, 255)
-        print("Thank you. Starting to work now...")
-        t = time.time()
-    elif maskColor == "black":
-        maskColor = (0, 0, 0)
-        print("Thank you. Starting to work now...")
-        t = time.time()
-    else:
-        print("Please input a valid color for the mask.")
-        continue
-    white = (255, 255, 255)
-    z = True
+white = (255, 255, 255)
+maskColor = (0, 0, 0)
 
 if folFil == "s":
     for fileName in files:
@@ -157,7 +136,7 @@ else:
         img.save('./MasksFolder/masked_'+fileName,'TIFF')
         
         positivePercentage = positivePixels / totalPixels * 100
-    print(f"Finished masking {fileName}. Total Pixels: {totalPixels}; Positive Pixels: {positivePixels}; Percentage: {positivePercentage:.2f}%\n")
+        print(f"Finished masking {fileName}. Total Pixels: {totalPixels}; Positive Pixels: {positivePixels}; Percentage: {positivePercentage:.2f}%\n")
 
 elapsed = time.time()-t
 print("Finished in "+str(elapsed)+"s.")
