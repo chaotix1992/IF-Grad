@@ -86,8 +86,8 @@ while not y:
         continue
     y = True
 
-# Let the user input the mask color
-
+print("Thank you. Starting to work now...")
+t = time.time()
 white = (255, 255, 255)
 maskColor = (0, 0, 0)
 
