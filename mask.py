@@ -132,8 +132,8 @@ if folFil == "s":
         
         img.putdata(newImageData)
         img.save('./Masks/masked_'+fileName,'TIFF')
-        positivePercentage = positivePixels / totalPixels
-        print(f"Finished masking {fileName}. Total Pixels: {totalPixels}; Positive Pixels: {positivePixels}; Percentage: {positivePercentage:.2f}\n")
+        positivePercentage = positivePixels / totalPixels * 100
+        print(f"Finished masking {fileName}. Total Pixels: {totalPixels}; Positive Pixels: {positivePixels}; Percentage: {positivePercentage:.2f}\%\n")
 else:
     for fileName in files:
         img = Image.open(path + fileName)
@@ -156,8 +156,8 @@ else:
         img.putdata(newImageData)
         img.save('./MasksFolder/masked_'+fileName,'TIFF')
         
-        positivePercentage = positivePixels / totalPixels
-        print(f"Finished masking {fileName}. Total Pixels: {totalPixels}; Positive Pixels: {positivePixels}; Percentage: {positivePercentage:.2f}\n")
+        positivePercentage = positivePixels / totalPixels * 100
+    print(f"Finished masking {fileName}. Total Pixels: {totalPixels}; Positive Pixels: {positivePixels}; Percentage: {positivePercentage:.2f}\%\n")
 
 elapsed = time.time()-t
 print("Finished in "+str(elapsed)+"s.")
