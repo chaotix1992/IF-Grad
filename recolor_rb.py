@@ -109,6 +109,7 @@ while not y:
                 img = Image.open(files[-1])
             except: 
                 print("Filename either incorrect or file does not exist.")
+                files.pop()
                 continue
             addMore = input('Add more files? (y/n) ')
         y = True
